@@ -87,21 +87,26 @@ def battleSystem(team1,team2):
 					print(opp)                       			         #  back from attack
 					attackinput = raw_input("Who will you attack? ")     #
 					if attackinput == "b":
-						print("breaking from attack")                             #
-						break
+						print("breaking from attack")
+						charinput = ""                            #
+						#break breaks from character's turn
 
-					while attackinput not in opp.show_teamnames():              #
-						print("repeat attacking ")
-						attackinput = raw_input("Who will you attack? ")        #
-					oppchar = methods_4_ease.string_to_char(attackinput,opp)    #  ATTACK ATTACK ATTACK
-					charselect.attack(oppchar) 										#
+					elif attackinput not in opp.show_teamnames():              #
+							print("repeat attacking ")
+							#attackinput = raw_input("Who will you attack? ")        #
+
+					else:
+						oppchar = methods_4_ease.string_to_char(attackinput,opp)    #  ATTACK ATTACK ATTACK
+						charselect.attack(oppchar)
+						options = options[3:] ##must repeat  										#
 
 					if (opp.team_loss()):
+
 						winner = sturn
 
-					methods_4_ease.turn_status(sturn,turn,sopp,opp)
+				methods_4_ease.turn_status(sturn,turn,sopp,opp)
 					#committedchar = True
-				options = options[3:]
+				#options = options[3:]
 
 
 			elif (charinput == "Done"):
@@ -110,7 +115,7 @@ def battleSystem(team1,team2):
 				nameslist.remove(str(charselect))
 				options = ["Attack","Defend","Heal","Done", "Press b to go back" ,"Move"]
 				charfinished = True
-
+				print("breaking from attack")
 
 
 	print(winner + " you have won!")
