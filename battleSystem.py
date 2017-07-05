@@ -74,20 +74,33 @@ def battleSystem(team1,team2):
 
 
 			elif (charinput in vital):
-			####Defend
-				if (charinput=="Defend")
+			####Defend     Focus
+				if (charinput=="Defend"):
 					print("defend")
-					charselect.defend
+					#charselect.defend
 
 
 			####Heal
-				if (charinput=="Heal")
+				elif (charinput=="Heal"):
 					print("health")
 					healthinput = raw_input("Who would you like to heal?")
+					if healthinput == "b":
+						print("breaking from attack")
+						charinput = ""
+
+					elif healthinput not in turn.show_teamnames():              #
+							print("repeat attacking ")
+
+					else:
+
+						turnchar = methods_4_ease.string_to_char(healthinput,turn)    #  ATTACK ATTACK ATTACK
+						print("got here")
+						charselect.heal(turnchar)
+						options = options[3:] ##must repeat
 
 
 			####Attack
-				if (charinput=="Attack"):
+				elif (charinput=="Attack"):
 					print(opp)                       			         #  back from attack
 					attackinput = raw_input("Who will you attack? ")     #
 					if attackinput == "b":
