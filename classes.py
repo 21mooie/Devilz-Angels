@@ -155,8 +155,8 @@ class Character(Character_Overview):
 
 
     def defend(self):                       #will improve later
-        self._hp += self._defe/2
-
+        self._hp += self._defe/2            #should make all attacks less powerful
+                                            #maybe take out
     def heal(self):
         self._hp += 30
 

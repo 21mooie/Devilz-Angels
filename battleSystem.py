@@ -75,11 +75,15 @@ def battleSystem(team1,team2):
 
 			elif (charinput in vital):
 			####Defend
-
+				if (charinput=="Defend")
+					print("defend")
+					charselect.defend
 
 
 			####Heal
-
+				if (charinput=="Heal")
+					print("health")
+					healthinput = raw_input("Who would you like to heal?")
 
 
 			####Attack
