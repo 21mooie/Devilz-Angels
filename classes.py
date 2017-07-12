@@ -48,11 +48,11 @@ class Team(object):
 
 class Character_Overview(object):     #may need super class that just takes up space
                                         # something for rocks, trees, cars, etc.
-    def __init__(self,name,hp,att,defe,ran,mob,team1,team2):
+    def __init__(self,name,hp,att,focus,ran,mob,team1,team2): #focus
         self._name = name
         self._hp = hp
         self._att = att
-        self._defe = defe
+        self._focus = focus
         self._pos = None
         self._mob = mob
         self._ran = ran
@@ -71,7 +71,7 @@ class Character_Overview(object):     #may need super class that just takes up s
     def is_attack_inrange(self):
         pass
 
-    def defend(self):
+    def focus(self):
         pass
 
     def recharge(self):
@@ -97,8 +97,8 @@ class Character_Overview(object):     #may need super class that just takes up s
 class Character(Character_Overview):
     #put something here if you want all instances to have the same
     #version of this
-    def __init__(self,name,hp,att,defe,ran,mob,team1,team2):
-        super(Character,self).__init__(name,hp,att,defe,ran,mob,team1,team2)
+    def __init__(self,name,hp,att,focus,ran,mob,team1,team2):   #focus
+        super(Character,self).__init__(name,hp,att,focus,ran,mob,team1,team2)
          #attack and range will be removed bcuz each char's attack will have diff stats
 
                                                     #teams begin close together
@@ -106,10 +106,14 @@ class Character(Character_Overview):
     def __str__(self):
         return self._name
 
-    def move(self,team1,team2):
+    def move(self,team1,team2):                 #modify move do checking in battleSystem
         moveran = []
-        upperran = self._pos + self._mob
-        lowerran = self._pos - self._mob
+        if (self._focus>0):
+            upperran = self._pos + (self._mob*2)
+            lowerran = self._pos - (self._mob*2)
+        else:
+            upperran = self._pos + self._mob
+            lowerran = self._pos - self._mob
         print(team1)
         print(team2)
 
@@ -150,15 +154,59 @@ class Character(Character_Overview):
                                         #other wise player can choose diff att or diff command
     def attack(self,other):
         if self.is_attack_inrange(other):    #will soon be turned into virtual function
-            print("attack successful")
-            other.damage(self._att)
+            print("attack successful")       #must ask whether attack should hit
+            if (self._focus>0):
+                other.damage(self._att*1.5)
+            else:
+                other.damage(self._att)
 
+    def damage(self,other):         #need one for heal
+        self._hp-=other
+        if self._hp < 0:
+            self._hp = 0
+            self.die()
 
-    def defend(self):                       #will improve later
-        self._hp += self._defe/2
+    def die(self):
+        for i in self._myteam.show_team():
+            if i.show_name() == self._name:
+                self._myteam.remove(i)
 
-    def heal(self):
-        self._hp += 30
+    def heal(self,other):
+        #self._hp += 30
+        if self.is_heal_inrange(other):    #will soon be turned into virtual function
+            print("heal successful")
+            other.increasehealth()
+
+    def is_heal_inrange(self,other):     #each attack will have different
+                                    #accuracy, criticality, and range
+        upperran = self._pos + self._ran      #super class does not need explicit attack
+        lowerran = self._pos - self._ran     # sub classes will have that.
+        if (self._pos <= other.show_pos() <= upperran
+            or lowerran <= other.show_pos() <= self._pos):
+            return True
+        else:                           #sub class attack will call this func
+            print(str(lowerran) + " " + str(self._pos) + " " + str(other.show_pos()) + " " + str(upperran) + " ran " + str(self._ran))
+            return False               #if returned true they will continue with attack
+                                        #other wise player can choose diff att or diff command
+
+    def increasehealth(self):          #use variables to change amount based on char
+        if (self._focus>0):
+            self._hp += 30
+        else:
+            if (self._hp<=70):
+                self._hp += 30
+            else:
+                self._hp = 100
+
+    def focus(self):                       #focus improves attack/mob/heal
+        #self._heal += self._focus/2            #needs helper function to check if focus
+        self._focus = 4
+
+    def focus_reduce(self):
+        self._focus-=1
+
+    def show_focus(self):
+        return self._focus
 
     def show_pos(self):
         return self._pos
@@ -166,20 +214,13 @@ class Character(Character_Overview):
     def show_hp(self):
         return self._hp
 
-    def damage(self,other):         #need one for heal
-        self._hp-=other
-        if self._hp < 0:
-            self._hp = 0
-            self.die()
+
                                         #functions for damange
                                         #and heal hp
     def show_name(self):
         return self._name
 
-    def die(self):
-        for i in self._myteam.show_team():
-            if i.show_name() == self._name:
-                self._myteam.remove(i)
+
 
 '''
 def main():

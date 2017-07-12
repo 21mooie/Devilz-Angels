@@ -14,8 +14,8 @@ def choosecar(thisteam,nameslist):
 def battleSystem(team1,team2):
 
 	winner = ""
-	options = ["Attack","Defend","Heal","Done", "Press b for back", "Move"]
-	vital = ["Attack","Defend","Heal"]
+	options = ["Attack","Focus","Heal","Done", "Press b for back", "Move"]
+	vital = ["Attack","Focus","Heal"]
 
 	turn = team2
 	opp = team1
@@ -42,7 +42,7 @@ def battleSystem(team1,team2):
 		sopp = splaceholder
 		######################
 		#team gets power to act
-		#each character gets the ability to attack, defend, or heal per turn
+		#each character gets the ability to attack, Focus, or heal per turn
 		#they can also move.
 		#once all players have finished their turn, control switches to other team
 		print ("\n" +  "Round " + str(roundnum) + "\n")
@@ -57,7 +57,7 @@ def battleSystem(team1,team2):
 				charselect = methods_4_ease.string_to_char(charselect,turn)
 				charfinished = False
 
-			###options = ["Attack","Defend","Heal","Done", "Press b for back", "Move"]
+			###options = ["Attack","Focus","Heal","Done", "Press b for back", "Move"]
 			print(options)
 			charinput = raw_input("Choose one of the above. ")
 			while charinput not in options:
@@ -74,16 +74,36 @@ def battleSystem(team1,team2):
 
 
 			elif (charinput in vital):
-			####Defend
-
+			####Focus     Focus
+				if (charinput=="Focus"):
+					print("Focus")
+					charselect.focus()
+					print("Focus activated! " + charselect.show_name() + " is now unstoppable!")
+					options = options[3:]
+					#charselect.Focus
 
 
 			####Heal
+				elif (charinput=="Heal"):
+					print("health")
+					healthinput = raw_input("Who would you like to heal?")
+					if healthinput == "b":
+						print("breaking from attack")
+						charinput = ""
 
+					elif healthinput not in turn.show_teamnames():              #
+							print("repeat attacking ")
+
+					else:
+
+						turnchar = methods_4_ease.string_to_char(healthinput,turn)    #  ATTACK ATTACK ATTACK
+						print("got here")
+						charselect.heal(turnchar)
+						options = options[3:] ##must repeat
 
 
 			####Attack
-				if (charinput=="Attack"):
+				elif (charinput=="Attack"):
 					print(opp)                       			         #  back from attack
 					attackinput = raw_input("Who will you attack? ")     #
 					if attackinput == "b":
@@ -113,7 +133,11 @@ def battleSystem(team1,team2):
 				print("done")
 				print("char getting removed")
 				nameslist.remove(str(charselect))
-				options = ["Attack","Defend","Heal","Done", "Press b to go back" ,"Move"]
+				options = ["Attack","Focus","Heal","Done", "Press b to go back" ,"Move"]
+				if (charselect.show_focus>0):
+					charselect.focus_reduce()
+					if (charselect.show_focus==0):
+						print("Oh no focus mode has ended :(")
 				charfinished = True
 				print("breaking from attack")
 
@@ -205,9 +229,9 @@ def battleSystem(team1,team2):
 							committedchar = True
 							options = options[3:]
 
-						elif charinput == "Defend":
-							print("defending")                     			#
-							char.defend() 											# DEFEND DEFEND DEFEND
+						elif charinput == "Focus":
+							print("Focusing")                     			#
+							char.Focus() 											# Focus Focus Focus
 							methods_4_ease.status(turnf,turn,oppf,opp)				#
 							committedchar = True
 							options = options[3:]
@@ -237,7 +261,7 @@ def battleSystem(team1,team2):
 			if donewchar:
 				print("char getting removed")
 				nameslist.remove(charselect)
-				options = ["Attack","Defend","Heal","Done", "Press b to go back" ,"Move"]
+				options = ["Attack","Focus","Heal","Done", "Press b to go back" ,"Move"]
 
 			if winner:
 				break
