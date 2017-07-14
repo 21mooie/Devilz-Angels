@@ -17,15 +17,14 @@ def battleSystem(team1,team2):
 	options = ["Attack","Focus","Heal","Done", "b", "Move"]
 	vital = ["Attack","Focus","Heal"]
 
-	turn = team2
-	opp = team1
-	#turnf = "Squad 1"
-	#oppf = "Squad 2"
-	sturn = "Squad 2"
-	sopp = "Squad 1"
-	charinput = "x"
+	#turn = team2
+	#opp = team1
 
-	battlelist = [opp,turn]
+	#sturn = "Squad 2"
+	#sopp = "Squad 1"
+	#charinput = "x"
+
+	battlelist = [team2,team1]
 
 
 	charselect = None
@@ -39,18 +38,18 @@ def battleSystem(team1,team2):
 		#####switch turns#####    should be in methods_4_ease
 
 		######switch teams
-		placeholder = turn
-		turn = opp
-		opp = placeholder
+		#placeholder = turn
+		#turn = opp
+		#opp = placeholder
 		#####switch teams
 
 		#####switch teamnames
-		splaceholder = sturn
-		sturn = sopp
-		sopp = splaceholder
+		#splaceholder = sturn
+		#sturn = sopp
+		#sopp = splaceholder
 		#####switch teamnames
 
-		#battlelist = methods_4_ease.switch(battlelist)
+		battlelist = methods_4_ease.switch(battlelist)
 
 		######################
 		#team gets power to act
@@ -61,11 +60,12 @@ def battleSystem(team1,team2):
 
 		#print ("\n" +  "Round " + str(roundnum) + "\n")  #should be in methods_4_ease.turn_status(...)
 		#roundnum+=1									     #''
-		#methods_4_ease.turn_status(sturn,turn,sopp,opp)
+		#methods_4_ease.turn_status(turn,opp)
 		#nameslist = turn.show_teamnames()[:]
+		turn = battlelist[0]
+		opp = battlelist[1]
 
-
-		nameslist = methods_4_ease.round_status(turn,sturn,opp,sopp,roundnum)
+		nameslist = methods_4_ease.round_status(turn, opp,roundnum)
 		charfinished = True
 		roundnum+=1
 
@@ -91,7 +91,7 @@ def battleSystem(team1,team2):
 			elif(charinput=="Move"):
 				if charselect.move(turn,opp):     		  #   MOVE MOVE MOVE							  #
 					options.pop()
-					methods_4_ease.turn_status(sturn,turn,sopp,opp)
+					methods_4_ease.turn_status(turn,opp)
 
 
 			####### End Move ##########
@@ -149,7 +149,7 @@ def battleSystem(team1,team2):
 
 						winner = sturn
 
-				methods_4_ease.turn_status(sturn,turn,sopp,opp)
+				methods_4_ease.turn_status(turn,opp)
 					#committedchar = True
 				#options = options[3:]
 

@@ -10,13 +10,13 @@ def string_to_char(charselect,team):
 
 
 #switch_turns
-def turn_status(turnf,turn,oppf,opp):
-	print(turnf + " it is your turn")
+def turn_status(turn,opp):
+	print(turn.show_name_of_team() + " it is your turn")
 	for i in turn.show_team():
 		print(i.show_name() + " health: " + str(i.show_hp()))
 		print(i.show_name() + " position: " + str(i.show_pos()))
 	print('\n')
-	print("This is " + oppf)
+	print("This is " + opp.show_name_of_team())
 	for j in opp.show_team():
 		print(j.show_name() + " health: " + str(j.show_hp()))
 		print(j.show_name() + " position: " + str(j.show_pos()))
@@ -28,10 +28,11 @@ def back():
 def switch(blist):
 	placeholder = blist[0]
 	blist[0] = blist[1]
+	blist[1] = placeholder
 	return blist
 
-def round_status(turn,sturn,opp,sopp,roundnum):
-	print ("\n" +  "Round " + str(roundnum) + "\n")  #should be in methods_4_ease.turn_status(...)									    
-	turn_status(sturn,turn,sopp,opp)
+def round_status(turn,opp,roundnum):
+	print ("\n" +  "Round " + str(roundnum) + "\n")  #should be in methods_4_ease.turn_status(...)
+	turn_status(turn,opp)
 	nameslist = turn.show_teamnames()[:]
 	return nameslist
