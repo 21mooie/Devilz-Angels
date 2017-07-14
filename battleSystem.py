@@ -52,6 +52,7 @@ def battleSystem(team1,team2):
 		charfinished = True
 
 		while len(nameslist) > 0 and winner == "":
+			#charinput = false
 			if (charfinished):
 
 				charselect = choosecar(turn,nameslist)
@@ -63,9 +64,12 @@ def battleSystem(team1,team2):
 			charinput = raw_input("Choose one of the above. ")
 			while charinput not in options:
 				charinput = raw_input("Choose one of the above. ")
-			if (charinput == "b"):
+			if (charinput == "b" and len(options)==6):
 				charinput = ""
 				charfinished = True
+
+
+			#add a function in methods_4_ease to remove back once a character has made a move
 
 			#######   Move  ########
 			elif(charinput=="Move"):
@@ -143,7 +147,6 @@ def battleSystem(team1,team2):
 					if (charselect.show_focus==0):
 						print("Oh no focus mode has ended :(")
 				charfinished = True
-				print("breaking from attack")
 
 
 	print(winner + " you have won!")
