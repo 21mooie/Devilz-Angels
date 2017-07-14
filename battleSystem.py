@@ -14,7 +14,7 @@ def choosecar(thisteam,nameslist):
 def battleSystem(team1,team2):
 
 	winner = ""
-	options = ["Attack","Focus","Heal","Done", "Press b for back", "Move"]
+	options = ["Attack","Focus","Heal","Done", "b", "Move"]
 	vital = ["Attack","Focus","Heal"]
 
 	turn = team2
@@ -53,6 +53,7 @@ def battleSystem(team1,team2):
 
 		while len(nameslist) > 0 and winner == "":
 			if (charfinished):
+
 				charselect = choosecar(turn,nameslist)
 				charselect = methods_4_ease.string_to_char(charselect,turn)
 				charfinished = False
@@ -62,9 +63,12 @@ def battleSystem(team1,team2):
 			charinput = raw_input("Choose one of the above. ")
 			while charinput not in options:
 				charinput = raw_input("Choose one of the above. ")
+			if (charinput == "b"):
+				charinput = ""
+				charfinished = True
 
 			#######   Move  ########
-			if(charinput=="Move"):
+			elif(charinput=="Move"):
 				if charselect.move(turn,opp):     		  #   MOVE MOVE MOVE							  #
 					options.pop()
 					methods_4_ease.turn_status(sturn,turn,sopp,opp)
@@ -133,7 +137,7 @@ def battleSystem(team1,team2):
 				print("done")
 				print("char getting removed")
 				nameslist.remove(str(charselect))
-				options = ["Attack","Focus","Heal","Done", "Press b to go back" ,"Move"]
+				options = ["Attack","Focus","Heal","Done", "b" ,"Move"]
 				if (charselect.show_focus>0):
 					charselect.focus_reduce()
 					if (charselect.show_focus==0):
