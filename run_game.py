@@ -6,8 +6,9 @@ def main():
 	#logo
 	#character choosing screen
 	#location screen
-
+	print("Creating Team 1")
 	a = Team()                                   #must add chars to teams right after being created
+	print("Creating Team 2")
 	b = Team()                                   #must put their team name in the before the name of the other team
 
 	               #name,hp,att,focus,ran,mob,team1,team2

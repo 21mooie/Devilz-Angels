@@ -5,13 +5,14 @@ class Team(object):
     def __init__(self):
         self._team = []
         self._teamnames = []     #so i have a list of the names of evryone on team
+        self._nameofteam = raw_input("What is the name of this team? ")
 
     def __str__(self):
         teamstring = ""
         for i in self._team:
             teamstring += i.show_name() + ", "
         teamstring = teamstring[:-2]
-        print(len(self._team))
+        #print(len(self._team))
         return teamstring
 
     def add(self,char):
@@ -44,6 +45,9 @@ class Team(object):
 
     def team_loss(self):
         return len(self._team) == 0
+
+    def show_name_of_team(self):
+        return self._nameofteam
 
 
 class Character_Overview(object):     #may need super class that just takes up space
@@ -153,8 +157,8 @@ class Character(Character_Overview):
             return False               #if returned true they will continue with attack
                                         #other wise player can choose diff att or diff command
     def attack(self,other):
-        if self.is_attack_inrange(other):    #will soon be turned into virtual function
-            print("attack successful")       #must ask whether attack should hit
+        if self.is_attack_inrange(other):    #calling attack should only return possible attack targets
+            print("attack successful")
             if (self._focus>0):
                 other.damage(self._att*1.5)
             else:

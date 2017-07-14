@@ -24,3 +24,14 @@ def turn_status(turnf,turn,oppf,opp):
 
 def back():
 	return True
+
+def switch(blist):
+	placeholder = blist[0]
+	blist[0] = blist[1]
+	return blist
+
+def round_status(turn,sturn,opp,sopp,roundnum):
+	print ("\n" +  "Round " + str(roundnum) + "\n")  #should be in methods_4_ease.turn_status(...)									    
+	turn_status(sturn,turn,sopp,opp)
+	nameslist = turn.show_teamnames()[:]
+	return nameslist

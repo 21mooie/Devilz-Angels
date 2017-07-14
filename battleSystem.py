@@ -23,6 +23,9 @@ def battleSystem(team1,team2):
 	#oppf = "Squad 2"
 	sturn = "Squad 2"
 	sopp = "Squad 1"
+	charinput = "x"
+
+	battlelist = [opp,turn]
 
 
 	charselect = None
@@ -32,26 +35,41 @@ def battleSystem(team1,team2):
 	roundnum = 1
 
 
-	while winner == "":
-		#####switch turns#####
+	while winner == "":                             ##each team
+		#####switch turns#####    should be in methods_4_ease
+
+		######switch teams
 		placeholder = turn
 		turn = opp
 		opp = placeholder
+		#####switch teams
+
+		#####switch teamnames
 		splaceholder = sturn
 		sturn = sopp
 		sopp = splaceholder
+		#####switch teamnames
+
+		#battlelist = methods_4_ease.switch(battlelist)
+
 		######################
 		#team gets power to act
-		#each character gets the ability to attack, Focus, or heal per turn
+		#each character gets the ability to attack, focus, or heal per turn
 		#they can also move.
 		#once all players have finished their turn, control switches to other team
-		print ("\n" +  "Round " + str(roundnum) + "\n")
-		roundnum+=1
-		methods_4_ease.turn_status(sturn,turn,sopp,opp)
-		nameslist = turn.show_teamnames()[:]
-		charfinished = True
+		######################
 
-		while len(nameslist) > 0 and winner == "":
+		#print ("\n" +  "Round " + str(roundnum) + "\n")  #should be in methods_4_ease.turn_status(...)
+		#roundnum+=1									     #''
+		#methods_4_ease.turn_status(sturn,turn,sopp,opp)
+		#nameslist = turn.show_teamnames()[:]
+
+
+		nameslist = methods_4_ease.round_status(turn,sturn,opp,sopp,roundnum)
+		charfinished = True
+		roundnum+=1
+
+		while len(nameslist) > 0 and winner == "":        #each char
 			#charinput = false
 			if (charfinished):
 
@@ -62,8 +80,6 @@ def battleSystem(team1,team2):
 			###options = ["Attack","Focus","Heal","Done", "Press b for back", "Move"]
 			print(options)
 			charinput = raw_input("Choose one of the above. ")
-			while charinput not in options:
-				charinput = raw_input("Choose one of the above. ")
 			if (charinput == "b" and len(options)==6):
 				charinput = ""
 				charfinished = True
@@ -76,6 +92,7 @@ def battleSystem(team1,team2):
 				if charselect.move(turn,opp):     		  #   MOVE MOVE MOVE							  #
 					options.pop()
 					methods_4_ease.turn_status(sturn,turn,sopp,opp)
+
 
 			####### End Move ##########
 
@@ -147,137 +164,10 @@ def battleSystem(team1,team2):
 					if (charselect.show_focus==0):
 						print("Oh no focus mode has ended :(")
 				charfinished = True
+				charinput = ""
+			else:
+				print("This input " + charinput + " is incorrect")
+
 
 
 	print(winner + " you have won!")
-
-
-
-
-
-	'''while winner == None:
-		if roundnum > 1:
-			print("Switching turns")
-	   	print("Round " + str(roundnum) + "\n")
-		roundnum+=1
-		methods_4_ease.switch_turns(turnf,turn,oppf,opp)
-		nameslist = turn.show_teamnames()[:]
-		#charselect = None
-		#charinput = None
-		committedchar = False
-		#print(turn)
-
-		### 2 ###
-		while len(nameslist) > 0:         #while everyone on team has not gone
-
-
-
-			for i in nameslist:
-				print(i)
-
-			if not committedchar:
-				charselect = raw_input("Choose the character to control: ")             #
-				while charselect not in nameslist:                                      #  Allows user to choose char if
-					charselect = raw_input("Choose the character to control: ")         #  not committed already
-
-				char = methods_4_ease.string_to_char(charselect,turn)
-
-			chosen = False
-
-			### 3 ###
-			while not chosen:               #while char has not chosen
-
-				if not brkfromwin:
-					print(options)
-					charinput = raw_input("Choose one of the above. ")                    #
-					if charinput == "b":												  #  Allows char to choose an
-						break															  #  option
-					while charinput not in options:                                  	  #
-						charinput = raw_input("Choose again. You cannot do that. ")		  #
-
- 				chardone = False
- 				donewchar = False
-				### 4 ###
-				while not chardone:	        #char has not committed to action
-
-					committedchar = False
-					if charinput == "Move":                       #
-						if not char.move(turn,opp):     		  #   MOVE MOVE MOVE
-							print("breaking from move")
-							break								  #
-						options.pop()
-						methods_4_ease.status(turnf,turn,oppf,opp)
-						committedchar = True
-
-
-					elif charinput in vital:                      #
-						                     					  # VITAL
-											                      #
-
-						if charinput == "Attack":                                #
-							print(opp)                       			         #  back from attack
-							attackinput = raw_input("Who will you attack? ")     #
-							if attackinput == "b":
-								print("breaking from attack")                             #
-								break
-
-							while attackinput not in opp.show_teamnames():              #
-								print("repeat attacking ")
-								attackinput = raw_input("Who will you attack? ")        #
-							oppchar = methods_4_ease.string_to_char(attackinput,opp)    #  ATTACK ATTACK ATTACK
-							char.attack(oppchar) 										#
-							if opp.team_loss():											#
-								winner = turnf
-								brkfromwin = True
-								print("breaking to end game")								#
-								break
-
-							methods_4_ease.status(turnf,turn,oppf,opp)
-							committedchar = True
-							options = options[3:]
-
-						elif charinput == "Focus":
-							print("Focusing")                     			#
-							char.Focus() 											# Focus Focus Focus
-							methods_4_ease.status(turnf,turn,oppf,opp)				#
-							committedchar = True
-							options = options[3:]
-
-
-						else:                        # will also have back function
-							print("healing")
-							char.heal()              # will change to include range    #  HEAL HEAL HEAL
-							methods_4_ease.status(turnf,turn,oppf,opp)				   #
-							committedchar = True
-							options = options[3:]
-
-					else:
-						print("done")
-						chosen = True                            #
-						committedchar = False                    #
-						donewchar = True                         #  DONE DONE DONE
-					chardone = True
-
-				if committedchar:
-					print("supposed to have finished either move or vital ")
-					chosen = bool(raw_input("Press Enter to continue turn otherwise type then press enter to end " + char.show_name() + " turn."))
-					if chosen:
-						donewchar = True
-						committedchar = False
-
-			if donewchar:
-				print("char getting removed")
-				nameslist.remove(charselect)
-				options = ["Attack","Focus","Heal","Done", "Press b to go back" ,"Move"]
-
-			if winner:
-				break
-
-		print("switch")
-		placeholder = turn      #
-		turn = opp 			   	#  switch turns
-		opp = placeholder 		#
-		placeholderf = turnf    #
-		turnf = oppf
-		oppf = placeholderf
-	'''
