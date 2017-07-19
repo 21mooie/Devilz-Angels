@@ -2,7 +2,7 @@ from classes import *
 import methods_4_ease
 
 
-def choosecar(thisteam,nameslist):
+def choosechar(thisteam,nameslist):
 	charselect = raw_input("Choose the character to control: ")             #
 	while charselect not in nameslist:                                      #  Allows user to choose char if
 		charselect = raw_input("Choose the character to control: ")
@@ -73,7 +73,7 @@ def battleSystem(team1,team2):
 			#charinput = false
 			if (charfinished):
 
-				charselect = choosecar(turn,nameslist)
+				charselect = choosechar(turn,nameslist)
 				charselect = methods_4_ease.string_to_char(charselect,turn)
 				charfinished = False
 
@@ -87,7 +87,7 @@ def battleSystem(team1,team2):
 
 			#add a function in methods_4_ease to remove back once a character has made a move
 
-			#######   Move  ########
+			#######   Move  ########              should be able to move through 2d array/map implementation
 			elif(charinput=="Move"):
 				if charselect.move(turn,opp):     		  #   MOVE MOVE MOVE							  #
 					options.pop()
@@ -99,7 +99,7 @@ def battleSystem(team1,team2):
 
 
 			elif (charinput in vital):
-			####Focus     Focus
+			####Focus     Focus                  should have to focus 3 times then gets immense power
 				if (charinput=="Focus"):
 					print("Focus")
 					charselect.focus()
@@ -108,7 +108,7 @@ def battleSystem(team1,team2):
 					#charselect.Focus
 
 
-			####Heal
+			####Heal                           should return all characters who can be healed based on health
 				elif (charinput=="Heal"):
 					print("health")
 					healthinput = raw_input("Who would you like to heal?")
@@ -127,7 +127,7 @@ def battleSystem(team1,team2):
 						options = options[3:] ##must repeat
 
 
-			####Attack
+			####Attack                       should check range then attack everyone in range
 				elif (charinput=="Attack"):
 					print(opp)                       			         #  back from attack
 					attackinput = raw_input("Who will you attack? ")     #
@@ -142,12 +142,15 @@ def battleSystem(team1,team2):
 
 					else:
 						oppchar = methods_4_ease.string_to_char(attackinput,opp)    #  ATTACK ATTACK ATTACK
-						charselect.attack(oppchar)
-						options = options[3:] ##must repeat  										#
+						if (charselect.is_attack_inrange(oppchar)):
+							charselect.attack(oppchar)
+							options = options[3:] ##must repeat
+						else:
+							print(oppchar.show_name() + " is out of range.")										#
 
 					if (opp.team_loss()):
 
-						winner = sturn
+						winner = turn.show_name_of_team()
 
 				methods_4_ease.turn_status(turn,opp)
 					#committedchar = True
