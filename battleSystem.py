@@ -117,14 +117,19 @@ def battleSystem(team1,team2):
 						charinput = ""
 
 					elif healthinput not in turn.show_teamnames():              #
-							print("repeat attacking ")
+							print("Cannot heal  " + healthinput)
 
 					else:
 
-						turnchar = methods_4_ease.string_to_char(healthinput,turn)    #  ATTACK ATTACK ATTACK
-						print("got here")
-						charselect.heal(turnchar)
-						options = options[3:] ##must repeat
+						turnchar = methods_4_ease.string_to_char(healthinput,turn)
+						if (charselect.is_heal_inrange(oppchar)):
+							charselect.heal(turnchar)
+							options = options[3:]
+							print(turnchar.show_name() + " was healed.")
+						else:
+							print("got here")
+							print(turnchar.show_name() + " is out of range.")
+					 		##must repeat
 
 
 			####Attack                       should check range then attack everyone in range

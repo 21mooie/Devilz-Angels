@@ -13,7 +13,7 @@ def main():
 
 	               #name,hp,att,focus,ran,mob,team1,team2
 
-	Al = Character("Al",100,70,0,1,10,a,b)
+	Al = Character("Al",100,70,0,1,10,a,b)    #the stronger the attack the more likely it hits
 	a.add(Al)
 	Bob = Character("Bob",100,80,0,2,10,b,a)
 	b.add(Bob)

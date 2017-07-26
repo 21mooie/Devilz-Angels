@@ -106,7 +106,7 @@ class Character(Character_Overview):
     #put something here if you want all instances to have the same
     #version of this
     def __init__(self,name,hp,att,focus,ran,mob,team1,team2):   #focus
-        super(Character,self).__init__(name,hp,att,focus,ran,mob,team1,team2)
+        super(Character,self).__init__(name,hp,att,focus,ran,mob,team1,team2) #charge
          #attack and range will be removed bcuz each char's attack will have diff stats
 
                                                     #teams begin close together
@@ -173,7 +173,7 @@ class Character(Character_Overview):
 
     def is_attack_successful(self,other): #attack will have to be passed
         mobtest = random.randint(0,other.show_mob())
-        hittest =  random.randint(0,self._mob)      #should be dependent on attack hit success rate
+        hittest =  random.randint(self._mob/2,self._mob)      #should be dependent on attack hit success rate
         print("hittest " + str(hittest))
         print("mobtest " + str(mobtest))
         if (hittest > mobtest):
@@ -192,7 +192,7 @@ class Character(Character_Overview):
             if i.show_name() == self._name:
                 self._myteam.remove(i)
 
-    def heal(self,other):
+    def heal(self,other):                  #needs to check if heal is in range
         #self._hp += 30
         if self.is_heal_inrange(other):    #will soon be turned into virtual function
             print("heal successful")
