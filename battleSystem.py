@@ -2,11 +2,11 @@ from classes import *
 import methods_4_ease
 
 
-def choosechar(thisteam,nameslist):
-	charselect = raw_input("Choose the character to control: ")             #
-	while charselect not in nameslist:                                      #  Allows user to choose char if
-		charselect = raw_input("Choose the character to control: ")
-	return charselect
+#def choosechar(thisteam,nameslist):
+#	charselect = raw_input("Choose the character to control: ")             #
+	#while charselect not in nameslist:                                      #  Allows user to choose char if
+		#charselect = raw_input("Choose the character to control: ")
+	#return charselect
 
 	#must improve to be able to check if the turn team has lost
 
@@ -67,13 +67,13 @@ def battleSystem(team1,team2):
 
 		nameslist = methods_4_ease.round_status(turn, opp,roundnum)
 		charfinished = True
-		roundnum+=1
+		#roundnum+=1
 
 		while len(nameslist) > 0 and winner == "":        #each char
 			#charinput = false
 			if (charfinished):
 
-				charselect = choosechar(turn,nameslist)
+				charselect = methods_4_ease.choosechar(turn,nameslist)
 				charselect = methods_4_ease.string_to_char(charselect,turn)
 				charfinished = False
 
@@ -170,7 +170,7 @@ def battleSystem(team1,team2):
 				charinput = ""
 			else:
 				print("This input " + charinput + " is incorrect")
-
+  		roundnum+=1
 
 
 	print(winner + " you have won!")

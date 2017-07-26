@@ -36,3 +36,9 @@ def round_status(turn,opp,roundnum):
 	turn_status(turn,opp)
 	nameslist = turn.show_teamnames()[:]
 	return nameslist
+
+def choosechar(thisteam,nameslist):
+	charselect = raw_input("Choose the character to control: ")             #
+	while charselect not in nameslist:                                      #  Allows user to choose char if
+		charselect = raw_input("Choose the character to control: ")
+	return charselect

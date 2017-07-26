@@ -53,8 +53,8 @@ class Team(object):
 class Character_Overview(object):     #may need super class that just takes up space
                                         # something for rocks, trees, cars, etc.
     def __init__(self,name,hp,att,focus,ran,mob,team1,team2): #focus
-        self._name = name
-        self._hp = hp
+        self._name = name               #ran will be removed
+        self._hp = hp                   #each attack will have its own ran
         self._att = att
         self._focus = focus
         self._pos = None
@@ -92,6 +92,10 @@ class Character_Overview(object):     #may need super class that just takes up s
 
     def show_name(self):
         pass
+
+    def show_mob(self):
+        pass
+
     def relocate(self,team1,team2):    #not necessary
         pass
 
@@ -138,8 +142,8 @@ class Character(Character_Overview):
         return True
 
 
-    def relocate(self,team1,team2):
-        self._pos = random.randint(-5,5)
+    def relocate(self,team1,team2):        #decides pos at beginning of match
+        self._pos = random.randint(-5,5)   #chars on same team should be close
         #self._pos = 4
         while self._pos in team1.team_pos() or self._pos in team2.team_pos():
             self._pos = random.randint(-5,5)
@@ -158,11 +162,24 @@ class Character(Character_Overview):
                                         #other wise player can choose diff att or diff command
     def attack(self,other):
         if self.is_attack_inrange(other):    #calling attack should only return possible attack targets
-            print("attack successful")
-            if (self._focus>0):
-                other.damage(self._att*1.5)
+            if (self.is_attack_successful(other)):
+                print("attack successful")
+                if (self._focus>0):
+                    other.damage(self._att*1.5)
+                else:
+                    other.damage(self._att)
             else:
-                other.damage(self._att)
+                print("Attack missed :(")
+
+    def is_attack_successful(self,other): #attack will have to be passed
+        mobtest = random.randint(0,other.show_mob())
+        hittest =  random.randint(0,self._mob)      #should be dependent on attack hit success rate
+        print("hittest " + str(hittest))
+        print("mobtest " + str(mobtest))
+        if (hittest > mobtest):
+            return True
+        return False
+
 
     def damage(self,other):         #need one for heal
         self._hp-=other
@@ -218,8 +235,8 @@ class Character(Character_Overview):
     def show_hp(self):
         return self._hp
 
-
-                                        #functions for damange
+    def show_mob(self):
+        return self._mob                #functions for damange
                                         #and heal hp
     def show_name(self):
         return self._name
