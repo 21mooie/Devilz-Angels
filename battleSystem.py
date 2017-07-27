@@ -113,7 +113,7 @@ def battleSystem(team1,team2):
 					print("health")
 					healthinput = raw_input("Who would you like to heal?")
 					if healthinput == "b":
-						print("breaking from attack")
+						print("breaking from heal")
 						charinput = ""
 
 					elif healthinput not in turn.show_teamnames():              #
@@ -122,7 +122,7 @@ def battleSystem(team1,team2):
 					else:
 
 						turnchar = methods_4_ease.string_to_char(healthinput,turn)
-						if (charselect.is_heal_inrange(oppchar)):
+						if (charselect.is_heal_inrange(turnchar)):
 							charselect.heal(turnchar)
 							options = options[3:]
 							print(turnchar.show_name() + " was healed.")
